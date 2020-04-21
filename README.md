@@ -1,0 +1,1 @@
+# HANA-XSA-template
