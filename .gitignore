@@ -1,0 +1,8 @@
+.idea
+.env
+coverage/
+.nyc_output/
+.npmrc
+log/
+node_modules/
+package-lock.json

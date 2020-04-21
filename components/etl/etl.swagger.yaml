@@ -1,0 +1,145 @@
+path:
+
+  /etl/run/{id}/{description}:
+    put:
+      summary: sp_etl_sql_script_step_add
+      tags:
+        - etl
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "runId"
+          required: true
+          schema:
+            type: number
+            default: 100
+        - name: "description"
+          in: "path"
+          description: "Description"
+          required: true
+          schema:
+            type: string
+            default: description
+      responses:
+        200:
+          $ref: '#/components/responses/runId'
+        400:
+          description: field is required
+
+  /etl/release_cube:
+    get:
+      summary: sp_release_cube
+      tags:
+        - etl
+      parameters:
+        - name: "assetId"
+          in: "query"
+          description: "assetId"
+          required: true
+          schema:
+            type: number
+            default: 100
+        - name: "stepRunId"
+          in: "query"
+          description: "stepRunId"
+          required: true
+          schema:
+            type: number
+            default: 100
+        - name: "assetName"
+          in: "query"
+          description: "assetName"
+          required: true
+          schema:
+            type: string
+            default: monthly
+      responses:
+        200:
+          description: SP has been runned
+          $ref: '#/components/responses/message'
+        400:
+          description: field is required
+
+components:
+  responses:
+    message:
+      description: message
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/message'
+    sp_etl_start:
+      description: sp_etl_start
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/sp_etl_start'
+    runId:
+      description: runId
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/run_id'
+    checkHistoryAdd:
+      description: checkHistoryAdd
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/check_history_add'
+
+  schemas:
+    message:
+      type: string
+      example: Message
+    sp_etl_start:
+      type: object
+      required:
+        - RUN_ID
+        - NEXT_STEP_ID
+        - RESULT_MESSAGE
+      properties:
+        RUN_ID:
+          type: number
+          example: 4
+        NEXT_STEP_ID:
+          type: number
+          example: 4
+        RESULT_MESSAGE:
+          type: string
+          example: 'Another ETL (ID = 0) for the asset (ID = 100) is currently running'
+    run_id:
+      type: number
+      example: 4
+    check_history_add:
+      type: object
+      required:
+        - OUT_CHECK_HISTORY_ID
+        - OUT_RESULT_MESSAGE
+      properties:
+        OUT_CHECK_HISTORY_ID:
+          type: number
+          example: 4
+        OUT_RESULT_MESSAGE:
+          type: string
+          example: 'A new check_history was successfully added'
+    Message:
+      type: string
+      example: 'No ETL with ID = 100) exists'
+    asset_to:
+      type: number
+      example: 100
+    user_name:
+      type: string
+      example: user
+    allow_resume:
+      type: boolean
+      example: 1
+    step_desc:
+      type: string
+      example: Description
+    is_succeed:
+      type: boolean
+      example: 1
+    row_count:
+      type: number
+      example: 100

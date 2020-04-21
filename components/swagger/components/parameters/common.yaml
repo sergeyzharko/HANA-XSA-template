@@ -1,0 +1,9 @@
+components:
+  parameters:
+    id:
+      name: id
+      description: parameter used for getting or updating certain info from API
+      in: path
+      required: true
+      schema:
+        type: integer

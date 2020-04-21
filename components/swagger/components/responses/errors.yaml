@@ -1,0 +1,29 @@
+components:
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorNotFound'
+    Unauthorized:
+      description: 'Error: Unauthorized'
+    Forbidden:
+      description: 'Error: Forbidden'
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: Forbidden
+    ServerError:
+      description: Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorServer'

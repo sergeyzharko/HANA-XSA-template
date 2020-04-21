@@ -1,0 +1,42 @@
+{
+  "name": "hana_test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.js",
+  "scripts": {
+    "test": "mocha --no-config ./components/*.integration.test.js",
+    "start": "node ./",
+    "dev": "nodemon --legacy-watch ./",
+    "devNotDockerAndWin": "nodemon ./",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@elastic/elasticsearch": "^7.6.1",
+    "@hapi/joi": "^17.1.1",
+    "@sap/hdbext": "latest",
+    "@sap/xsenv": "latest",
+    "@sap/xssec": "^2.2.5",
+    "chai": "^4.2.0",
+    "dotenv": "latest",
+    "express": "latest",
+    "express-correlation-id": "latest",
+    "express-joi-validation": "^4.0.3",
+    "express-winston": "^4.0.3",
+    "http-errors": "^1.7.3",
+    "mocha": "^7.1.1",
+    "node-cache": "^5.1.0",
+    "passport": "^0.4.1",
+    "querystring": "^0.2.0",
+    "request-promise-native": "^1.0.8",
+    "supertest": "^4.0.2",
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-ui-express": "^4.1.4",
+    "winston": "^3.2.1",
+    "winston-daily-rotate-file": "^4.4.2",
+    "winston-elasticsearch": "^0.8.5",
+    "ws": "^7.2.3"
+  }
+}

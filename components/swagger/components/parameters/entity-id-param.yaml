@@ -1,0 +1,9 @@
+components:
+  parameters:
+    EntityIdParam:
+      in: query
+      name: entityId
+      required: true
+      schema:
+        type: string
+      description: Entity Id

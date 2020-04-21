@@ -1,0 +1,6 @@
+components:
+  responses:
+    Created:
+      description: the request has been fulfilled
+    NoContent:
+      description: operation completed successfully

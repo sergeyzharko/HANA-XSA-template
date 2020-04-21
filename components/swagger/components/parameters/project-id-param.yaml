@@ -1,0 +1,9 @@
+components:
+  parameters:
+    ProjectIdParam:
+      in: query
+      name: projectId
+      required: true
+      description: Id of the project
+      schema:
+        type: string

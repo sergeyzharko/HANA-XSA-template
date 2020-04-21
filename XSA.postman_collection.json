@@ -1,0 +1,463 @@
+{
+	"info": {
+		"_postman_id": "45a60477-3f9a-41df-9111-14f4634e14a3",
+		"name": "XSA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Log",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/log",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"log"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Copy",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/pt_query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"pt_query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sql_user",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{authKey}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/sql_user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"sql_user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "query",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{authKey}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "run",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{authKey}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/etl/run/1/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"etl",
+						"run",
+						"1",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "release_cube",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{authKey}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/etl/release_cube?assetId=16&stepRunId=16&assetName=asd",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"etl",
+						"release_cube"
+					],
+					"query": [
+						{
+							"key": "assetId",
+							"value": "16"
+						},
+						{
+							"key": "stepRunId",
+							"value": "16"
+						},
+						{
+							"key": "assetName",
+							"value": "asd"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth/sign-in",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\": \"SZharko\",\r\n\t\"password\": \"Amaranth123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/auth/sign-in",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"sign-in"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "query DMT",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c427ec8f-bc00-4ab8-ba2a-7766d478943d",
+						"exec": [
+							"// From https://github.com/postmanlabs/postman-app-support/issues/2452",
+							"// pm.globals.get()",
+							"",
+							"if( ( pm.environment.get(\"token_time\") <= Date.now() ) || ( pm.environment.get(\"authKey\") == \"undefined undefined\" ) ) {",
+							"    var body = {",
+							"        username: pm.environment.get(\"SZharko\"),",
+							"        password: pm.environment.get(\"Amaranth123\")",
+							"    };",
+							"    // console.log(body);",
+							"    pm.sendRequest({",
+							"        url: pm.environment.get(\"signin_url\"),",
+							"        method: 'POST',",
+							"        header: {",
+							"            'Content-Type': 'application/json'",
+							"        },",
+							"        body: {",
+							"            mode: 'raw',",
+							"            raw: JSON.stringify(body)",
+							"        }",
+							"    }, function (err, res) {",
+							"        pm.environment.set(\"authKey\", res.json().token_type + ' ' + res.json().access_token);",
+							"        pm.environment.set(\"token_time\", Date.now() + 60*60*1000); //60*60*1000 = 1hr in milliseconds",
+							"    });",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/dqt/query?sort=id&order=descending&projectId=GMDA&folderId=1&entityId=\"SXGMDA\".\"gmda.monthly.cv::cv_ana_monthly\"",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"dqt",
+						"query"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "id"
+						},
+						{
+							"key": "order",
+							"value": "descending"
+						},
+						{
+							"key": "projectId",
+							"value": "GMDA"
+						},
+						{
+							"key": "folderId",
+							"value": "1"
+						},
+						{
+							"key": "entityId",
+							"value": "\"SXGMDA\".\"gmda.monthly.cv::cv_ana_monthly\""
+						},
+						{
+							"key": "",
+							"value": "bearer eyJhbGciOiAiUlMyNTYiLCJ0eXAiOiAiSldUIn0.eyJqdGkiOiI2YmYzNTNkYTg0YTA0NzExYTg1OTU1MTM2MjhiZmU0OCIsImV4dF9hdHRyIjp7ImVuaGFuY2VyIjoiWFNVQUEifSwiZ2l2ZW5fbmFtZSI6IlNlcmdleSIsInhzLnVzZXIuYXR0cmlidXRlcyI6e30sImZhbWlseV9uYW1lIjoiWmhhcmtvIiwic3ViIjoiMTc0ODEzIiwic2NvcGUiOlsiRl9TTURDX0RNVC5DcmVhdGUiLCJGX1NNRENfRE1ULkVkaXQiLCJGX1NNRENfRE1ULkRpc3BsYXkiLCJvcGVuaWQiXSwiY2xpZW50X2lkIjoic2ItRl9TTURDX0RNVCIsImNpZCI6InNiLUZfU01EQ19ETVQiLCJhenAiOiJzYi1GX1NNRENfRE1UIiwiZ3JhbnRfdHlwZSI6InBhc3N3b3JkIiwidXNlcl9pZCI6IjE3NDgxMyIsIm9yaWdpbiI6InVhYSIsInVzZXJfbmFtZSI6IlNaSEFSS08iLCJlbWFpbCI6IlNlcmdleV9aaGFya29AZXBhbS5jb20iLCJhdXRoX3RpbWUiOjE1ODU2NTg3NTgsInJldl9zaWciOiIyOTQ0OTI1NyIsImlhdCI6MTU4NTY1ODc1OCwiZXhwIjoxNTg1NzAxOTU4LCJpc3MiOiJodHRwOi8veHNhLTZhNmUzYzQwLWJkNTAtZWQ0YS05ZmMxLWFlNjgwMjNhMGFkYi9VQUEvb2F1dGgvdG9rZW4iLCJ6aWQiOiJ1YWEiLCJhdWQiOlsib3BlbmlkIiwic2ItRl9TTURDX0RNVCIsIkZfU01EQ19ETVQiXX0.onumF1SpV3U4ksZS6UP8E9Wp2G77IWL7JdG67PA77LivxdbaH-iSwjADhoSOW9Ay6XnmiSNKNPIHvNwMOorLxFYL2HzHgpgojXMWrbozIo3LwnYNVNCf1CbW2sILDCmosVWNECYFqPstoJLkIqOqonasGku3WwvNrVmtRaoxyN3NhasxB96DWfgpLA92URRtqjx_2d1q-uZb6WvImVCNrxawV0TQztTyjJraMKvRJdQc5NdARQA1IVdpqMmKOLxaU9vKoQZLug878NaM_TachIME7Sb64cOC7rU8qeOszWFYRxKifiEOuRtcOm3bMUBIrZfsVkULfGtPC16ABxyJAw",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "error",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{authKey}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/error3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"error3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cache stats",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/cache/stats",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"cache",
+						"stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cache flush",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/cache/flush",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"cache",
+						"flush"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "query2",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{authKey}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/query2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"query2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getSessionData",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{authKey}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/getSessionData",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"getSessionData"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "6d898a1d-7cd1-41dc-8515-b1fc8f377f13",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "82e7060c-7d5e-4612-b664-ee7df90a2589",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

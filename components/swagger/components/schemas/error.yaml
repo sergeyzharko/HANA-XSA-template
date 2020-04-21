@@ -1,0 +1,28 @@
+components:
+  schemas:
+    ErrorNotFound:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+        - stack
+      example:
+        message: Not Found
+    ErrorUnauthorized:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+      example:
+        message: Unathorized
+    ErrorServer:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
