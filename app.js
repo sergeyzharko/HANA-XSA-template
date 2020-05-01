@@ -1,6 +1,13 @@
+// hosts: 52.59.244.124 hxehost #Bayer AWS Exp 2
+
 // const port = process.env.PORT || 3000;
 const express = require('express');
 const app = express();
+
+// For Swagger, before dotenv
+process.env.AUTH_PREFIX = 'Api-Key ';
+process.env.AUTH_API_KEY = 'VNTpi0KI4d5mnXL1SUQEya3zEh1JUUQc';
+
 require('dotenv').config();
 const xsenv = require('@sap/xsenv');
 const https = require('https');
@@ -10,7 +17,6 @@ const router = require('./router');
 const createError = require('http-errors');
 const correlator = require('express-correlation-id'); // для идентификации в логах
 
-require('dotenv').config();
 // console.log(process.env.VCAP_SERVICES);
 // console.log(xsenv.readServices());
 

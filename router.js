@@ -9,7 +9,7 @@ const xsenv = require('@sap/xsenv');
 const controller = require('./controller');
 // const hanaDb = require('./components/hana/hana.db');
 
-const hanaMiddleware = require('./components/hana/hana.middleware');
+const hanaMiddleware = require('./components/hana/hana.middleware'); // Для подключения при помощи .env файла
 
 const secure = require('./components/passport/secure');
 
@@ -58,7 +58,10 @@ router.get('/test', function(req, res) {
 	res.type('application/json').status(200).send('test');
 });
 
-router.get('/pt_query', secure, hanaMiddleware, async function(req, res) {
+router.get('/pt_query', secure, async function(req, res) {
+
+	// Instead of hanaMiddleware
+
 	const hanaOptionsEnv = xsenv.getServices({
 		hana: {
 			tag: 'hana',
@@ -80,12 +83,12 @@ router.get('/pt_query', secure, hanaMiddleware, async function(req, res) {
 	res.type('application/json').status(200).send(data);
 });
 
-router.get('/cache/stats', secure, async function(req, res) {
+router.get('/cache/stats', secure, async function(req, res) { // Статистика кэша
 	const data = myCache.getStats();
 	res.type('application/json').status(200).send(data);
 });
 
-router.get('/cache/flush', secure, async function(req, res) {
+router.get('/cache/flush', secure, async function(req, res) { // Очистить кэш
 	myCache.flushAll();
 	res.type('application/json').status(200).send('Done');
 });
@@ -112,9 +115,8 @@ router.get('/sql_user', secure, hanaMiddleware, async function(req, res) {
 });
 
 router.get('/getSessionData', secure, hanaMiddleware, async function(req, res, next) {
-
 	const connParams = {
-		serverNode: '3.122.113.107:39015',
+		serverNode: '18.196.189.210:39015',
 		uid: 'DMT',
 		pwd: 'DmtPass123',
 		CURRENTSCHEMA: 'SXGMDA',
@@ -149,9 +151,8 @@ router.get('/getSessionData', secure, hanaMiddleware, async function(req, res, n
 
 // обращение к указанной базе
 router.get('/query', secure, hanaMiddleware, async function(req, res, next) {
-
 	const connParams = {
-		serverNode: '3.122.113.107:39015',
+		serverNode: '18.196.189.210:39015',
 		uid: 'DMT',
 		pwd: 'DmtPass123',
 		CURRENTSCHEMA: 'SXGMDA',
@@ -264,7 +265,7 @@ router.put(
 	})),
 	async(req, res, next) => { // Option 1
 		const connParams = {
-			serverNode: '3.122.113.107:39015',
+			serverNode: '18.196.189.210:39015',
 			uid: 'SZharko',
 			pwd: 'Amaranth123',
 			CURRENTSCHEMA: 'SXGMDA',
@@ -296,7 +297,7 @@ router.get(
 	})),
 	async(req, res) => {
 		const connParams = {
-			serverNode: '3.122.113.107:39015',
+			serverNode: '18.196.189.210:39015',
 			uid: 'SZharko',
 			pwd: 'Amaranth123',
 			CURRENTSCHEMA: 'SXGMDA',
@@ -323,6 +324,28 @@ router.get(
 		}
 	},
 );
+
+// sp, connection data from .env
+router.get(
+	'/sp', secure, hanaMiddleware,
+	validator.query(Joi.object().keys({
+		flowid: Joi.number().integer().required(),
+		ruleid: Joi.number().integer().required(),
+	})),
+	async(req, res, next) => {
+		try {
+			const {
+				db,
+				query: {
+					flowid,
+					ruleid,
+				},
+			} = req;
+			res.json(await controller.sp(db, flowid, ruleid));
+		} catch (err) {
+			next(err);
+		}
+	});
 
 router.use('/chatServer', require('./components/chatServer')());
 

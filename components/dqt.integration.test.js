@@ -11,6 +11,7 @@ let auth; // authorization HEADER
 * @param {Request} request request(app)
 * @param {String} auth authorization HEADER
 * @param {String} id query ID
+* @return {Object}
 */
 const getQueryById = (request, auth, id) => new Promise((resolve, reject) =>
 	request
@@ -33,6 +34,7 @@ const getQueryById = (request, auth, id) => new Promise((resolve, reject) =>
  * @param {String} projectId projectId
  * @param {String} auth authorization HEADER
  * @param {Object} qJson dqt query JSON
+ * @return {Object}
  */
 const runQuery = (request, projectId, auth, qJson) => new Promise((resolve, reject) =>
 	request
@@ -57,6 +59,7 @@ const runQuery = (request, projectId, auth, qJson) => new Promise((resolve, reje
  * @param {String} auth authorization HEADER
  * @param {Object} data query result set
  * @param {String} type query export type ['lowLevels', 'allLevels']. Default > 'lowLevels'
+ * @return {Object}
  */
 const runExport = (request, projectId, auth, data, type = 'lowLevels') => new Promise((resolve, reject) =>
 	request

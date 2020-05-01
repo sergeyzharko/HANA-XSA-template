@@ -24,12 +24,12 @@ const options = {
 		],
 		components: {
 			securitySchemes: {
-				// apiKey: {
-				// 	type: 'apiKey',
-				// 	description: `API key to authorize requests(${process.env.AUTH_PREFIX + process.env.AUTH_API_KEY})`,
-				// 	name: 'Authorization',
-				// 	in: 'header',
-				// },
+				apiKey: {
+					type: 'apiKey',
+					description: `API key to authorize requests(${process.env.AUTH_PREFIX + process.env.AUTH_API_KEY})`,
+					name: 'Authorization',
+					in: 'header',
+				},
 				OAuth2: {
 					type: 'oauth2',
 					flows: {
@@ -50,22 +50,19 @@ const options = {
 	],
 };
 
-// const apiKeySettings = {
-// 	authAction: {
-// 		apiKey: {
-// 			name: 'apiKey',
-// 			schema: {
-// 				type: 'apiKey',
-// 				in: 'header',
-// 				name: 'Authorization',
-// 				description: '',
-// 			},
-// 			value: process.env.AUTH_PREFIX + process.env.AUTH_API_KEY,
-// 		},
-// 	},
-// };
-
 const oauthSettings = {
+	authAction: {
+		apiKey: {
+			name: 'apiKey',
+			schema: {
+				type: 'apiKey',
+				in: 'header',
+				name: 'Authorization',
+				description: '',
+			},
+			value: process.env.AUTH_PREFIX + process.env.AUTH_API_KEY,
+		},
+	},
 	oauth: {
 		clientId: xsuaa[0].credentials.clientid,
 		clientSecret: xsuaa[0].credentials.clientsecret,
@@ -79,6 +76,7 @@ router.get('/swagger.json', (req, res) => {
 	res.send(specs);
 });
 
+// router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, false, oauthSettings));
 router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, false, oauthSettings));
 
 module.exports = router;

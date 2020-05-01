@@ -1,5 +1,3 @@
-const hdbext = require('@sap/hdbext');
-
 const prepareMapping = objectType => require(`../domain/${objectType}`);
 
 class ValidationError extends Error {

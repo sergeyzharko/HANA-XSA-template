@@ -131,4 +131,15 @@ module.exports = {
 		return data;
 	},
 
+	async sp(db, flowid, ruleid) {
+		try {
+			const dbConnection = new DBPromisified(db);
+			const loadProcedure = await dbConnection.loadProcedurePromisified(hdbext, null, 'proc::getRuleIds');
+			const results = await dbConnection.callProcedurePromisified(loadProcedure, [flowid, ruleid]);
+			return results;
+		} catch (err) {
+			throw err;
+		}
+	},
+
 };

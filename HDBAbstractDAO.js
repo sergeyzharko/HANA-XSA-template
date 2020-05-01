@@ -1,5 +1,5 @@
 const util = require('util');
-const dbUtil = require('./dbUtil');
+const dbUtil = require('./utils/dbUtil');
 
 class HDBAbstractDAO {
 	constructor(oDBClient) {
@@ -141,10 +141,10 @@ class HDBAbstractDAO {
 
 	async getSessionData() {
 		const query =
-			`SELECT 
-				CURRENT_SCHEMA, 
-				SESSION_USER, 
-				SESSION_CONTEXT('APPLICATIONUSER'), 
+			`SELECT
+				CURRENT_SCHEMA,
+				SESSION_USER,
+				SESSION_CONTEXT('APPLICATIONUSER'),
 				SESSION_CONTEXT('XS_APPLICATIONUSER')
 			FROM DUMMY`;
 

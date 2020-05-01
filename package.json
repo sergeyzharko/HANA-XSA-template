@@ -4,10 +4,13 @@
   "description": "",
   "main": "test.js",
   "scripts": {
-    "test": "mocha --no-config ./components/*.integration.test.js",
-    "start": "node ./",
-    "dev": "nodemon --legacy-watch ./",
-    "devNotDockerAndWin": "nodemon ./",
+	"test": "npm run test:unit && npm run test:api && npm run test:integration",
+	"test:integration": "mocha --no-config ./**/*.integration.test.js",
+	"test:unit": "mocha ./**/*.test.js",
+	"test:api": "mocha ./**/*.api.js",
+    "start": "node ./bin/www",
+    "dev": "nodemon --legacy-watch ./bin/www",
+    "devNotDockerAndWin": "nodemon ./bin/www",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
